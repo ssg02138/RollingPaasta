@@ -1,0 +1,25 @@
+191107
+참고 사항
+
+-공통-
+https://guide.paas-ta.kr/guide-4.0-rotelle
+
+참고
+
+-spring boot- 
+local에서 cloud로 push할 때
+패키징 war 형태로 push(jar도 되는지 테스트 안해봄)
+
+-push 순서-
+spring boot 코딩
+mvn clean(안하면 컴파일 꼬임)
+mvn compile
+mvn package
+
+manifest.yml 체크
+
+cf push (-f manifest.yml)
+
+-db 접속-
+cf ssh RollingpaastaServer -L 81:10.10.5.15:3306 이후
+mysql workbench -> 127.0.0.1:81 id, pw 입력(id pw는 cf env로 확인)

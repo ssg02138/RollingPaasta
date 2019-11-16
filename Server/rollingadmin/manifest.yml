@@ -1,0 +1,7 @@
+---
+applications:
+- name: rollingadmin
+  memory: 1024M
+  buildpack: java_buildpack
+  path: ./target/rollingadmin-0.0.1-SNAPSHOT.war
+  host: Rollingadmin

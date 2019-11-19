@@ -10,21 +10,24 @@ import com.rolling.api.DB.DBConnection;
 @RestController
 public class LightController {
 	private DBConnection db;
-	public LightController(){
-		db= new DBConnection();
+
+	public LightController() {
+		db = new DBConnection();
 	}
+
 	@GetMapping("/light/get")
 	public LightDTOList get(@RequestParam("date") String param) {
-		
-		LightDTOList result=db.getDatafromDB();
-		if(result==null) {
-			result=new LightDTOList();
+		LightDTOList result = null;
+		if (param != null) {
+			result = db.getDatafromDB(param);
+		}
+		if (result == null) {
+			result = new LightDTOList();
 			result.setList(null);
 			result.setSuccess(false);
 			result.setTotal_count(0);
 		}
 		return result;
-		
 
 	}
 

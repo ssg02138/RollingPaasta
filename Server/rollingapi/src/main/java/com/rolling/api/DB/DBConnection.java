@@ -47,28 +47,30 @@ public class DBConnection {
 		return conn;
 	}
 
-	public LightDTOList getDatafromDB() {
+	public LightDTOList getDatafromDB(String date) {
 		
 		LightDTO dto =null;
 		LightDTOList dtolist=new LightDTOList();
 		ArrayList<LightDTO> tempdtolist = new ArrayList<LightDTO>();
-		int size;
+		int size=0;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Connection conn =connect();
 		try {
-			pstmt = conn.prepareStatement("SELECT * FROM testTable LIMIT 5");
+			pstmt = conn.prepareStatement("select rate, sector.name, time from traffic left join sector on (traffic.idx=sector.idx) where time =? limit 5");
+			pstmt.setString(1, date);
+			
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				dto= new LightDTO();
 				dto.setTraffic(rs.getString(1));
-				dto.setName("tempname");
-				dto.setDate("tempdate");
+				dto.setName(rs.getString(2));
+				dto.setDate(rs.getString(3));
 
 				tempdtolist.add(dto);
+				size++;
 			}
-			size = rs.getRow()+1;
 			dtolist.setList(tempdtolist);
 			dtolist.setSuccess(true);
 			dtolist.setTotal_count(size);

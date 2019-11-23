@@ -1,0 +1,7 @@
+---
+applications:
+- name: rollingapi
+  memory: 1024M
+  buildpack: java_buildpack
+  path: ./target/rollingapi-1-0.0.1-SNAPSHOT.war
+  host: Rollingapi

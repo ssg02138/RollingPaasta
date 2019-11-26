@@ -57,7 +57,7 @@ public class DBConnection {
 		ResultSet rs = null;
 		Connection conn =connect();
 		try {
-			pstmt = conn.prepareStatement("select rate, sector.name, time from traffic left join sector on (traffic.idx=sector.idx) where time =? limit 5");
+			pstmt = conn.prepareStatement("select rate,name,time from(select * from(select * from traffic  where time <=? order by time desc LIMIT 18446744073709551615)temp group by temp.idx)t inner join sector on t.idx=sector.idx;");
 			pstmt.setString(1, date);
 			
 			rs = pstmt.executeQuery();
@@ -66,7 +66,7 @@ public class DBConnection {
 				dto= new LightDTO();
 				dto.setTraffic(rs.getString(1));
 				dto.setName(rs.getString(2));
-				dto.setDate(rs.getString(3));
+				dto.setDate(rs.getInt(3));
 
 				tempdtolist.add(dto);
 				size++;

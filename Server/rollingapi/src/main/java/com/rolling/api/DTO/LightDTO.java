@@ -4,7 +4,7 @@ public class LightDTO {
 
 	private String traffic;
 	private String name;
-	private String date;
+	private int date;
 
 	public String getTraffic() {
 		return traffic;
@@ -22,11 +22,11 @@ public class LightDTO {
 		this.name = name;
 	}
 
-	public String getDate() {
+	public int getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(int date) {
 		this.date = date;
 	}
 	

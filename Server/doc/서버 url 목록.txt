@@ -1,3 +1,0 @@
-http://rollingpaasta.paas-ta.org
-http://rollingpaasta.paas-ta.org/test
-http://rollingpaasta.paas-ta.org/light/get?param=asd

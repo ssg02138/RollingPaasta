@@ -1,6 +1,0 @@
----
-applications:
-- name: rollingpy
-  memory: 1024M
-  buildpack: python_buildpack
-  instances: 1

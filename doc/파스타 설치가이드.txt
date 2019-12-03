@@ -1,0 +1,24 @@
+1. cli 다운로드
+https://github.com/cloudfoundry/cli#installers-and-compressed-binaries
+
+2. 파스타 연동 설정
+cf login https://api.paas-ta.org --skip-ssl-validation
+https://api.paas-ta.org
+아이디
+패스워드
+select -> RollingPaasta
+
+3. 서비스 바인딩
+cf env rpweb : 서비스 상세정보 확인
+다른 cmd창에서
+cf ssh rpweb -L 81:10.10.5.15:3306 : mysql 진입
+3306 포트를 81번 포트로 터널링
+ssh가 열려있어야 해당 포트를 이용해서 접근 가능
+mysql workbench -> 127.0.0.1:81 id, pw 입력
+데이터베이스 접근
+
+* 127 루프백 주소를 사용하는 이유는 내 컴퓨터를 통해서 클라우드에 접속해야하기 때문에 컴퓨터에 열려있는 포트를 통해 접속하기 때문
+
+
+
+

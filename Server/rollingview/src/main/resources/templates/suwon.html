@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Traffic View Page</title>
+    <link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+    <link type="text/css" rel="stylesheet" href="styles/site.flatly.css">
+    <link type="text/css" rel="stylesheet" href="css/highlightjs.css">
+    <link type="text/css" rel="stylesheet" href="css/base.css">
+</head>
+
+<body>
+	<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="js/base.js"></script>
+	<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk&amp;submodules=panorama,geocoder,drawing,visualization"></script>
+	
+	<div id="wrap" class="section">
+		<div id="map" style="width:100%;height:800px;"></div>
+	</div>
+	
+	<script id="code">
+	var map = new naver.maps.Map('map', {
+		center: new naver.maps.LatLng(37.20912657310686, 126.97643276443408),
+		mapTypeControl: true,
+		mapTypeControlOptions: {
+			style: naver.maps.MapTypeControlStyle.DROPDOWN
+		},
+		maxZoom: 9,
+		minZoom: 9
+	});
+
+	var trafficLayer = new naver.maps.TrafficLayer({
+		interval: 2000 // 2초마다 새로고침
+	});
+
+	var btn = $('#traffic');
+
+	naver.maps.Event.addListener(map, 'trafficLayer_changed', function(trafficLayer) {
+		if (trafficLayer) {
+			btn.addClass('control-on');
+			$("#autorefresh").parent().show();
+			$("#autorefresh")[0].checked = true;
+		} else {
+			btn.removeClass('control-on');
+			$("#autorefresh").parent().hide();
+		}
+	});
+
+	trafficLayer.setMap(map);
+
+
+	btn.on("click", function(e) {
+		e.preventDefault();
+
+		if (trafficLayer.getMap()) {
+			trafficLayer.setMap(null);
+		} else {
+			trafficLayer.setMap(map);
+		}
+	});
+
+	$("#autorefresh").on("click", function(e) {
+		var btn = $(this),
+			checked = btn.is(":checked");
+
+		if (checked) {
+			trafficLayer.startAutoRefresh();
+		} else {
+			trafficLayer.endAutoRefresh();
+		}
+	});
+	</script>
+
+
+
+	<!--[if lt IE 9]>
+	<script src="scripts/iron.js"></script>
+	<script src="scripts/respond.min.js"></script>
+	<script src="scripts/docstrap.lib.ie8.js"></script>
+	<script type="text/javascript">
+		var isTocSupported = false;
+		var isSearchSupported = false;
+		function remove(itm) {
+			itm && itm.parentElement.removeChild(itm);
+		}
+		remove(document.getElementById('toc'));
+		remove(document.getElementById('_searchbox'));
+	</script>
+	<![endif]-->
+
+
+	<!--[if gt IE 8]> <!-- -->
+	<script src="scripts/docstrap.lib.js"></script>
+	<script id="__toc" src="scripts/toc.js"></script>
+	<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+	<script type="text/javascript">
+		var isTocSupported = true;
+		var isSearchSupported = true;
+	</script>
+	<!-- <![endif]-->
+
+	<script src="js/highlight.min.js"></script>
+
+	<script>
+	$( function () {
+		$( "[id*='$']" ).each( function () {
+			var $this = $( this );
+
+			$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+		} );
+
+
+		$('pre').each(function(i, block) {
+			hljs.highlightBlock(block);
+		});
+
+		if (isTocSupported) {
+			$.catchAnchorLinks( {
+				navbarOffset: 10
+			} );
+
+			$( "#toc" ).toc( {
+				anchorName  : function ( i, heading, prefix ) {
+					var id = $( heading ).attr( "id" );
+					return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+				},
+				selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+				showAndHide : false,
+				smoothScrolling: true
+			} );
+		}
+
+		$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+		$( '.dropdown-toggle' ).dropdown();
+		$( "table" ).each( function () {
+		  var $this = $( this );
+		  $this.addClass('table');
+		} );
+		$("#main>section:not('.tutorial-section')").localScroll({
+			offset: {
+				top: -170 //offset by the height of your header (give or take a few px, see what works for you)
+			}
+		});
+	} );
+	</script>
+
+	<script type="text/javascript">
+		if (isSearchSupported) {
+			$(document).ready(function() {
+				SearcherDisplay.init();
+
+				var w = $(window);
+				$('.dropdown-menu').on('mousewheel', function(e, d) {
+					var t = $(this),
+						up = e.originalEvent.deltaY < 0;
+
+					if (w.width() < 768) return;
+
+					if (up) {
+						if (t.scrollTop() === 0) e.preventDefault();
+					} else {
+						if (t.scrollTop() == t.get(0).scrollHeight - t.innerHeight()) e.preventDefault();
+					}
+				})
+			});
+		}
+	</script>
+
+	<script type="text/javascript" src="https://wcs.naver.net/wcslog.js"></script>
+	<script type="text/javascript">
+		if (!wcs_add) var wcs_add = {};
+		wcs_add["wa"] = "ab0d1ce292d4cc";
+		wcs_do();
+	</script>
+
+</body>
+</html>

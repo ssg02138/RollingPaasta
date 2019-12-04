@@ -1,0 +1,6 @@
+---
+applications:
+- name: Rollingview
+  memory: 1024M
+  buildpack: java_buildpack
+  path: ./target/rollingview-0.0.1-SNAPSHOT.war

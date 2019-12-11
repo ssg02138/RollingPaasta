@@ -37,9 +37,13 @@ public class DBConnection {
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
+			System.out.println("ClassNotFoundException");
+
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			System.out.println("SQL Exception");
+
 			e.printStackTrace();
 		}
 		return conn;
